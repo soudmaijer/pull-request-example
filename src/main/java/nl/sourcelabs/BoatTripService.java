@@ -8,11 +8,11 @@ public class BoatTripService {
         this.repository = repository;
     }
 
-    public String startBoatTrip() {
+    public BoatTrip startBoatTrip() {
         BoatTrip bt = new BoatTrip();
         bt.start();
         repository.add(bt);
-        return bt.getBoatTripId();
+        return bt;
     }
 
     public void stopBoatTrip(String boatTripId) {
