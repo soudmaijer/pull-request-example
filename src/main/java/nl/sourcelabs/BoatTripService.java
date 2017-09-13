@@ -35,7 +35,7 @@ public class BoatTripService {
     }
 
 
-    public List<BoatTrip> getTripsFromToday(LocalDate now) {
+    public List<BoatTrip> getTripsFromToday() {
         return repository.getTripsOnDate(LocalDate.now());
     }
 }

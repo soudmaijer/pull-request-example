@@ -19,6 +19,6 @@ public class BoatTripRepository {
     }
 
     public List<BoatTrip> getTripsOnDate(LocalDate localDate) {
-        return map.values().stream().filter(it -> it.getEndTime().toLocalDate().isEqual(localDate)).collect(Collectors.toList());
+        return map.values().stream().filter(it -> it.getStartTime().toLocalDate().isEqual(localDate)).collect(Collectors.toList());
     }
 }

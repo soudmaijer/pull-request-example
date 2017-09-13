@@ -32,7 +32,7 @@ public class BoatTrip {
         if (startTime == null) {
             throw new BoatTripException("Cannot stop BoatTrip, not started yet!");
         }
-        if (startTime == null) {
+        if (endTime != null) {
             throw new BoatTripException("Cannot stop BoatTrip, already completed!");
         }
         endTime = LocalDateTime.now();

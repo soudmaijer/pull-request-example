@@ -60,7 +60,7 @@ public class BoatTripApp {
         System.out.println("\n----------------------");
         System.out.println("Summary for " + LocalDate.now().toString());
         System.out.println("----------------------\n");
-        boatTripService.getTripsFromToday(LocalDate.now()).forEach(it ->
+        boatTripService.getTripsFromToday().forEach(it ->
                 System.out.println("BoatTrip-" + it.getBoatTripId() + " duration: " + it.getDuration().getSeconds() + " seconds.")
         );
     }
