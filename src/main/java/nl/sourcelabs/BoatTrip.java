@@ -5,25 +5,13 @@ import java.time.LocalDateTime;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Represents a bookable boat trip.
+ * Represents a bookable boat trip. The boat trip maintains the trip duration and ticket generation.
  */
 public class BoatTrip {
 
     private LocalDateTime startTime, endTime;
     private String boatTripId;
-    private boolean active = false;
     private static final AtomicInteger boatIdGenerator = new AtomicInteger();
-    private Thread tripRunner = new Thread(() -> {
-        active = true;
-        while (active) {
-            System.out.println("BoatTrip with boatTripId: " + boatTripId + " active for: " + getDuration().getSeconds() + " seconds.");
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    });
 
     public BoatTrip() {
         boatTripId = String.valueOf(boatIdGenerator.incrementAndGet());
@@ -33,11 +21,7 @@ public class BoatTrip {
         if (startTime != null) {
             throw new BoatTripException("Cannot start BoatTrip, already started!");
         }
-        if (endTime != null) {
-            throw new BoatTripException("Cannot start BoatTrip, already completed!");
-        }
         startTime = LocalDateTime.now();
-        tripRunner.start();
         return boatTripId;
     }
 
@@ -45,10 +29,9 @@ public class BoatTrip {
         if (startTime == null) {
             throw new BoatTripException("Cannot stop BoatTrip, not started yet!");
         }
-        if (startTime == null) {
+        if (endTime != null) {
             throw new BoatTripException("Cannot stop BoatTrip, already completed!");
         }
-        active = false;
         endTime = LocalDateTime.now();
     }
 
@@ -57,6 +40,10 @@ public class BoatTrip {
             return Duration.between(startTime, LocalDateTime.now());
         }
         return Duration.between(startTime, endTime);
+    }
+
+    public boolean isActive() {
+        return startTime != null && endTime == null;
     }
 
     public LocalDateTime getStartTime() {
