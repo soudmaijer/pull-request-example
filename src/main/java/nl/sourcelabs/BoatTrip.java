@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Represents a bookable boat trip.
+ * Represents a bookable boat trip. The boat trip maintains the trip duration and ticket generation.
  */
 public class BoatTrip {
 
@@ -20,9 +20,6 @@ public class BoatTrip {
     public String start() {
         if (startTime != null) {
             throw new BoatTripException("Cannot start BoatTrip, already started!");
-        }
-        if (endTime != null) {
-            throw new BoatTripException("Cannot start BoatTrip, already completed!");
         }
         startTime = LocalDateTime.now();
         return boatTripId;

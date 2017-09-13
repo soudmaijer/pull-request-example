@@ -6,16 +6,29 @@ import java.util.List;
 public class BoatTripService {
 
     private BoatTripRepository repository;
+    private long numberOfBoats = 10;
 
-    public BoatTripService(BoatTripRepository repository) {
+    public BoatTripService(long numberOfBoats, BoatTripRepository repository) {
+        this.numberOfBoats = numberOfBoats;
         this.repository = repository;
     }
 
-    public BoatTrip startBoatTrip() {
+    public String startBoatTrip() {
+        if(!hasBoatsAvailable() ) {
+            throw new BoatTripException("No more boats available!");
+        }
         BoatTrip bt = new BoatTrip();
         bt.start();
         repository.add(bt);
-        return bt;
+        return bt.getBoatTripId();
+    }
+
+    public boolean isBoatTripActive(String boatTripId) {
+        return repository.get(boatTripId).isActive();
+    }
+
+    public boolean hasBoatsAvailable() {
+        return repository.getNumberOfActiveBoatTrips() < numberOfBoats;
     }
 
     public void stopBoatTrip(String boatTripId) {

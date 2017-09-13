@@ -4,8 +4,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class BoatTripTest {
 
     private BoatTrip boatTrip;
@@ -38,8 +36,10 @@ public class BoatTripTest {
     @Test
     public void stop() throws Exception {
         boatTrip.start();
+        Thread.sleep(1);
         boatTrip.stop();
         Assert.assertFalse(boatTrip.isActive());
+        Assert.assertNotEquals(0L, boatTrip.getDuration().getNano());
     }
 
     @Test(expected = BoatTripException.class)

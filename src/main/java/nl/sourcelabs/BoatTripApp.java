@@ -6,17 +6,17 @@ import java.util.List;
 
 public class BoatTripApp {
     private final BoatTripService boatTripService;
-    private final List<BoatTrip> boatTrips = new ArrayList<>();
+    private final List<String> boatTrips = new ArrayList<>();
     private boolean running;
 
     public BoatTripApp() {
-        this.boatTripService = new BoatTripService(new BoatTripRepository());
+        this.boatTripService = new BoatTripService(10, new BoatTripRepository());
         Thread tripRunner = new Thread(() -> {
             running = true;
 
             while (running) {
-                for (BoatTrip boatTrip : boatTrips) {
-                    System.out.println("BoatTrip-" + boatTrip.getBoatTripId() + " active for: " + boatTrip.getDuration().getSeconds() + " seconds.");
+                for (String boatTrip : boatTrips) {
+                    System.out.println("BoatTrip-" + boatTrip + " active for: " + boatTripService.getDurationInSeconds(boatTrip) + " seconds.");
                 }
                 try {
                     Thread.sleep(1000);
@@ -41,16 +41,16 @@ public class BoatTripApp {
     }
 
     public String startBoatTrip() {
-        BoatTrip boatTrip = boatTripService.startBoatTrip();
+        String boatTrip = boatTripService.startBoatTrip();
         boatTrips.add(boatTrip);
 
-        System.out.println("BoatTrip-" + boatTrip.getBoatTripId() + " started!");
-        return boatTrip.getBoatTripId();
+        System.out.println("BoatTrip-" + boatTrip + " started!");
+        return boatTrip;
     }
 
     public void stopBoatTrip(String boatTripId) {
         boatTripService.stopBoatTrip(boatTripId);
-        boatTrips.removeIf(it -> it.getBoatTripId().equals(boatTripId));
+        boatTrips.removeIf(it -> it.equals(boatTripId));
 
         System.out.println("BoatTrip-" + boatTripId + " stopped!");
         System.out.println("BoatTrip-" + boatTripId + " was active for: " + boatTripService.getDurationInSeconds(boatTripId) + " second(s).");

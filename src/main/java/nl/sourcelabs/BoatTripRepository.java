@@ -21,4 +21,8 @@ public class BoatTripRepository {
     public List<BoatTrip> getTripsOnDate(LocalDate localDate) {
         return map.values().stream().filter(it -> it.getStartTime().toLocalDate().isEqual(localDate)).collect(Collectors.toList());
     }
+
+    public long getNumberOfActiveBoatTrips() {
+        return map.values().stream().filter(BoatTrip::isActive).count();
+    }
 }
