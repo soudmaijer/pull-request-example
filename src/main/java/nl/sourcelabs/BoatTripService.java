@@ -1,5 +1,8 @@
 package nl.sourcelabs;
 
+import java.time.LocalDate;
+import java.util.List;
+
 public class BoatTripService {
 
     private BoatTripRepository repository;
@@ -29,5 +32,10 @@ public class BoatTripService {
             throw new BoatTripException("BoatTrip not found for boatTripId: " + boatTripId);
         }
         return bt.getDuration().getSeconds();
+    }
+
+
+    public List<BoatTrip> getTripsFromToday(LocalDate now) {
+        return repository.getTripsOnDate(LocalDate.now());
     }
 }

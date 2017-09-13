@@ -1,7 +1,10 @@
 package nl.sourcelabs;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public class BoatTripRepository {
 
@@ -13,5 +16,9 @@ public class BoatTripRepository {
 
     public BoatTrip get(String id) {
         return map.get(id);
+    }
+
+    public List<BoatTrip> getTripsOnDate(LocalDate localDate) {
+        return map.values().stream().filter(it -> it.getEndTime().toLocalDate().isEqual(localDate)).collect(Collectors.toList());
     }
 }
